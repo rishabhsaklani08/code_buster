@@ -88,7 +88,28 @@
             font-family: 'Indie Flower', cursive;
             font-size: 58px;
             color: #56c371a1;
-        
+        }
+        .form input[type="password"],
+        .form input[type="text"],
+        .form input[type="submit"] {
+        inline-size: 100%;
+        }
+        .sign_up input[type="submit"] {
+        background-color: #ea4c88;
+        color: #eee;
+        font-weight: 700;
+        position: relative;
+        width: 250px;
+        height: 45px;
+        border-radius: 12px;
+        margin-top: 8px;
+        border: 2px solid transparent;
+        }
+        .sign-box input[type="submit"]:focus,
+        .sign-box input[type="submit"]:hover,
+        .sign-box input[type="submit"]:active{
+            text-transform: uppercase;
+            border: 2px solid #3c434a;
         }
 
     </style>
@@ -98,7 +119,7 @@
     <h2 class="sign_heading">SignUp</h2>
     <div class="container">
         <div class="sign-box grid">
-            <form action="" method="post">
+            <form action="{% url 'signup'%}" method="post">
                 {% csrf_token %}
                 <div class="inputbox">
                     <input id="login__username" type="text" name="username" class="form__input"  required>
@@ -133,12 +154,20 @@
                     <input id="myInput2" type="password" name="confirm_password"  required>
                     <span><label for="login__cpassword">Confirm Password</label></span>    
                 </div>
+                    <span id='message'></span>
+                
                 <label for="show_pswd" class="inputbox">Show Password</label>
                 <input type="checkbox" id="show_pswd" onclick="myFunction()">
+                <br>
+                <div class="sign_up">
+                    <input type="submit" value="Sign In">                    
+                  </div>
             </form>
         </div>
     </div>
     
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script>
         function myFunction() {
             var x = document.getElementById("myInput");
@@ -151,6 +180,12 @@
                 y.type = "password";
             }
         }
+        $('#myInput, #myInput2').on('keyup', function () {
+            if ($('#myInput').val() == $('#myInput2').val()) {
+                $('#message').html('Matched').css('color', 'green');;
+            } else 
+                $('#message').html('Mismatched').css('color', 'red');
+        });
     </script>
 </body>
 </html>
