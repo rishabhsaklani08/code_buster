@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <title>Sign Up</title> 
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+       
+        *{
+            margin: 0;
+            padding:0;
+            box-sizing: border-box;
+            
+        }
+
+        body{
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            gap: 30px;
+            background: #2c3338;
+
+
+        }
+
+        .inputbox{
+            position: relative;
+            width: 250px;
+            padding-top: 8px;
+            padding-bottom: 10px;
+            font-family:'Poppins', sans-serif;
+        }
+
+        .inputbox input{
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 5px;
+            outline: none;
+            color: rgba(255, 255, 255, 0.79);
+            font-size: 1em;
+            background: transparent;
+            font-family:'Poppins', sans-serif;
+        }
+
+        .inputbox span{
+            position: absolute;
+            left: 0;
+            padding:10px;
+            pointer-events:none;
+            font-size:1em;
+            color:rgba(255, 255, 255, 0.25);
+            text-transform:uppercase;
+            transition: 0.5s;
+            font-family:'Poppins', sans-serif;
+        }
+        .inputbox input:valid ~ span,
+        .inputbox input:focus ~ span{
+            color: #ea4c88;
+            transform: translateX(10px) translateY(-7px);
+            font-size: 0.65em;
+            padding: 0 11px;
+            background: #2c3338;
+            border-left: 1px solid #ea4c88;
+            border-right: 1px solid #ea4c88;
+        }
+
+        .inputbox input:valid,
+        .inputbox input:focus{
+            border: 1px solid #ea4c88;
+        }
+        .container{
+            border: 3px dashed #56606b5e;
+        }
+        .sign-box{
+            padding: 8px;
+        }
+        .sign_heading{
+            align-items:center;
+            
+            font-family: 'Indie Flower', cursive;
+            font-size: 58px;
+            color: #56c371a1;
+        
+        }
+
+    </style>
+</head>
+<body>
+    <!--------------------------------------- Sign Up -------------------------------------------------->
+    <h2 class="sign_heading">SignUp</h2>
+    <div class="container">
+        <div class="sign-box grid">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="inputbox">
+                    <input id="login__username" type="text" name="username" class="form__input"  required>
+                    <span><label for="login__username">Username</label></span>
+                </div>
+
+                <div class="inputbox">
+                    <input id="login__firstname" type="text" name="firstname" class="form__input" required>
+                    <span><label for="login__firstname">First Name</label></span>
+                </div>
+
+                
+                <div class="inputbox">
+                    <input id="login__lastname" type="text" name="lastname" class="form__input" required>
+                    <span><label for="login__lastname">Last Name</label></span>
+                </div>
+
+                
+                <div class="inputbox">
+                    <input  id="login__email" type="email" name="email" class="form__input" required>
+                    <span><label for="login__email">Email Id</label></span>
+                </div>
+
+                
+                
+                <div class="inputbox">
+                    <input id="myInput" type="password" name="password"  required>
+                    <span><label for="login__password">Password</label></span>
+                </div>
+
+                <div class="inputbox">
+                    <input id="myInput2" type="password" name="confirm_password"  required>
+                    <span><label for="login__cpassword">Confirm Password</label></span>    
+                </div>
+                <label for="show_pswd" class="inputbox">Show Password</label>
+                <input type="checkbox" id="show_pswd" onclick="myFunction()">
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myInput");
+            var y = document.getElementById("myInput2");
+            if (x.type === "password") {
+                x.type = "text";
+                y.type = "text";
+            } else {
+                x.type = "password";
+                y.type = "password";
+            }
+        }
+    </script>
+</body>
+</html>
