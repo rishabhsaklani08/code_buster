@@ -116,6 +116,14 @@
 </head>
 <body>
     <!--------------------------------------- Sign Up -------------------------------------------------->
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dissmissible fade show" role="alert">
+    <strong>Message: </strong>{{message}}
+    <button type="button" class="close" data-dismiss="alert" aria-lable="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    {% endfor%}
     <h2 class="sign_heading">SignUp</h2>
     <div class="container">
         <div class="sign-box grid">
@@ -141,6 +149,12 @@
                 <div class="inputbox">
                     <input  id="login__email" type="email" name="email" class="form__input" required>
                     <span><label for="login__email">Email Id</label></span>
+                </div>
+
+                
+                <div class="inputbox">
+                    <input  id="login__number" type="number" name="phoneno" class="form__input" required>
+                    <span><label for="login__number">Whatsapp No</label></span>
                 </div>
 
                 

@@ -3,6 +3,12 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
+from code_buster.settings import ID,TOKEN
+# from django.core.mail import send_mail
+
+import os
+from twilio.rest import Client
+
 
 # Create your views here.
 
@@ -32,16 +38,36 @@ def signup(request):
         firstname=request.POST['firstname']
         lastname=request.POST['lastname']
         email=request.POST['email']
+        phoneno=request.POST['phoneno']
         password=request.POST['password']
+
+        if User.objects.filter(username=username):
+            messages.error(request,"This username is already present")
+            return(redirect('login_home'))
+
+        if User.objects.filter(email=email):
+            messages.error(request,"This email is already registered")
+            return(redirect('login_home'))
 
         myuser=User.objects.create_user(username,email,password)
         myuser.first_name=firstname
         myuser.last_name=lastname
+        myuser.phoneno=phoneno
 
         myuser.save()
 
         messages.success(request,"Successfully logged in")
         
+
+        #<-------- sending Email ----------->
+        # subject="Welcome to Code Busters, WebLogin"
+        message="Welcome to Code Busters, WebLogin\nHello {0}\t!!\n Please join our discord comunity '''{1}'''".format(myuser.first_name,email_content)
+        # from_email=settings.EMAIL_HOST_USER
+        # to_email=myuser.email
+        to_phoneno=myuser.phoneno
+        # send_mail(subject,message,from_email,to_email,)
+        send_whatsapp(message,to_phoneno)
+
         return(redirect("signin"))
 
     return(render(request, 'login/signup.html'))
@@ -53,5 +79,26 @@ def signout(request):
     return(redirect('login_home'))
     
 
+def send_whatsapp(msg,to_phoneno):
+     
+    client = Client(ID, TOKEN) 
+    message = client.messages.create( 
+                              from_='whatsapp:+14155238886',  
+                              body=msg,      
+                              to=f'whatsapp:+91{to_phoneno}' 
+                          ) 
+    print(message.sid)
 
-email_content='''<iframe src="https://discord.com/widget?id=789008145245536259&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe> '''
+    
+    # message = Mail(
+    # from_email=from_email,
+    # to_emails=to_email,
+    # subject=subject,
+    # html_content=msg)
+
+    # sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+    # response = sg.send(message)
+    # print(response.status_code, response.body, response.headers)
+
+
+email_content='''\n\n<iframe src="https://discord.com/widget?id=789008145245536259&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe> '''
